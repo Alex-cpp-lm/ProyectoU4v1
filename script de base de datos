@@ -1,0 +1,149 @@
+drop database tiendau4; 
+create database tiendau4;
+use tiendau4;
+create table Empleados(
+idEmpleado int primary key auto_increment,
+nombre varchar(30) not null,
+apellido varchar (45) not null,
+usuario char(30) not null,
+pass varchar(256) not null,
+salario float(2) not null,
+foto varchar(1000)
+);
+
+create table marca(
+idMarca int primary key auto_increment,
+Nombre varchar(30) not null,
+logo varchar(1000) 
+);
+
+
+create table Productos(
+idProducto int primary key auto_increment,
+nombre varchar(30) not null,
+codigo char(12) not null,
+precio decimal(3) null,
+descripcion varchar(200) not null,
+cantidad int not null,
+idMarca int not null,
+imagen varchar(1000),
+foreign key (idMarca) references marca(idMarca)
+);
+
+create table ventas (
+idVenta int primary key auto_increment,
+descripcion varchar(100),
+total float(2) not null,
+fecha datetime not null,
+idEmpleado int not null,
+foreign key (idEmpleado) references empleados(idEmpleado)
+);
+
+create table detalles_ventas (
+idProducto int not null,
+idVenta int not null,
+cantidad int not null,
+precioVenta float(2),
+foreign key (idProducto) references productos(idProducto),
+foreign key (idVenta) references ventas(idVenta)
+);
+
+-- INSERTAR LAS 10 MARCAS MÁS COMUNES EN UN SUPERMERCADO
+INSERT INTO marca (Nombre, logo) VALUES ('Coca-Cola', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Pepsi', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Nestlé', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Bimbo', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Lala', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Colgate', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Procter & Gamble', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Unilever', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Peñafiel', '');
+INSERT INTO marca (Nombre, logo) VALUES ('Herdez', '');
+
+-- INSERTAR 40 PRODUCTOS COMUNES, ASOCIADOS A LAS MARCAS ANTERIORES (10 MARCAS, 4 PRODUCTOS POR MARCA)
+-- Nota: `idMarca` debe corresponder al ID de la marca que se acaba de insertar
+
+-- Productos de Coca-Cola
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Coca-Cola 600ml', '000000000001', 'Refresco Coca-Cola 600ml', 100, 1, 'https://supermode.com.mx/cdn/shop/products/100001337_4be2fa42-a15d-4539-a584-385823b5cfce.jpg?v=1698797211', 15.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Coca-Cola 2L', '000000000002', 'Refresco Coca-Cola 2L', 50, 1, 'https://www.movil.farmaciasguadalajara.com/wcsstore/FGCAS/wcs/products/302546_A_1280_AL.jpg', 30.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Fanta 600ml', '000000000003', 'Refresco sabor naranja Fanta 600ml', 60, 1, 'https://chedrauimx.vtexassets.com/arquivos/ids/38985772/7501055303779_00.jpg?v=638671328414530000', 14.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Sprite 600ml', '000000000004', 'Refresco sabor lima-limón Sprite 600ml', 80, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8CY4RU-g37r_RxS3_2gL1nq8GeYg3Tt6kiA&s', 15.00);
+
+-- Productos de Pepsi
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pepsi 600ml', '000000000005', 'Refresco Pepsi 600ml', 100, 2, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750103131001L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 14.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pepsi 2L', '000000000006', 'Refresco Pepsi 2L', 50, 2, 'https://www.movil.farmaciasguadalajara.com/wcsstore/FGCAS/wcs/products/302279_A_1280_AL.jpg', 28.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('7Up 600ml', '000000000007', 'Refresco sabor lima-limón 7Up 600ml', 70, 2, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750102201458L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 14.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Mirinda 600ml', '000000000008', 'Refresco sabor naranja Mirinda 600ml', 60, 2, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750102201491L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 14.00);
+
+-- Productos de Nestlé
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Leche en polvo', '000000000009', 'Leche en polvo entera Nestlé', 30, 3, 'https://www.nestleprofessional.com.mx/sites/default/files/styles/np_product_detail/public/2022-11/leche_en_polvo_nestle_35_kg.png?itok=-J1kWc0z', 120.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Chocolates KitKat', '000000000010', 'Chocolates KitKat barra', 120, 3, 'https://m.media-amazon.com/images/I/61pH5H4s9yL._AC_UF894,1000_QL80_.jpg', 18.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Cereal Nesquik', '000000000011', 'Cereal Nesquik 300g', 40, 3, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00761328739241L.jpg', 50.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Helado de vainilla', '000000000012', 'Helado de vainilla Nestlé', 25, 3, 'https://chedrauimx.vtexassets.com/arquivos/ids/38942073-800-auto?v=638670789141100000&width=800&height=auto&aspect=true', 40.00);
+
+-- Productos de Bimbo
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pan blanco Bimbo', '000000000013', 'Pan blanco Bimbo paquete', 200, 4, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750100011120L.jpg', 30.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pan integral Bimbo', '000000000014', 'Pan integral Bimbo paquete', 150, 4, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750081002206L.jpg', 35.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Roles de canela', '000000000015', 'Roles de canela Bimbo', 100, 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-6BvvBZID4thxaJFhxtWbfckzwuprYtm9Eg&s', 45.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pan molido', '000000000016', 'Pan molido Bimbo', 80, 4, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750100011185L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 15.00);
+
+-- Productos de Lala
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Leche entera Lala', '000000000017', 'Leche entera Lala 1L', 300, 5, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750102052606L.jpg', 25.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Leche deslactosada', '000000000018', 'Leche deslactosada Lala 1L', 200, 5, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750102051539L.jpg', 28.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Crema Lala', '000000000019', 'Crema de leche Lala', 100, 5, 'https://www.soriana.com/on/demandware.static/-/Sites-soriana-grocery-master-catalog/default/dwc1c6de45/images/product/7501020513134_A.jpg', 35.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Queso manchego', '000000000020', 'Queso manchego Lala', 90, 5, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2XG7AN5FB1cN_813uN1-2Rg5mPd7csJg8ag&s', 85.00);
+
+-- Productos de Colgate
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Pasta dental Colgate', '000000000021', 'Pasta dental Colgate Total', 200, 6, 'https://chedrauimx.vtexassets.com/arquivos/ids/37983150/7501035911376_00.jpg?v=638653273218000000', 30.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Cepillo dental Colgate', '000000000022', 'Cepillo dental Colgate', 150, 6, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHNjlOCjrHUdOQ1WY3lJNxkb-TcKCwu9QF5Q&s', 45.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Enjuague bucal Colgate', '000000000023', 'Enjuague bucal Colgate Plax', 120, 6, 'https://www.fahorro.com/media/catalog/product/7/8/7891024025406_4_1.jpg?optimize=medium&bg-color=255,255,255&fit=bounds&height=700&width=700&canvas=700:700', 40.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Hilo dental Colgate', '000000000024', 'Hilo dental Colgate', 50, 6, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAIgY_XoAOQ3ePErrpHrTLgKZlFkxx5O1-AQ&s', 20.00);
+
+-- Productos de Procter & Gamble
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Detergente Ariel', '000000000025', 'Detergente en polvo Ariel', 300, 7, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750043515073L.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 50.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Jabón Zest', '000000000026', 'Jabón de tocador Zest', 180, 7, 'https://www.mayoreototal.mx/cdn/shop/products/7506306245990_700x.webp?v=1669652997', 15.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Suavizante Downy', '000000000027', 'Suavizante para ropa Downy', 150, 7, 'https://m.media-amazon.com/images/I/819mKQGw5pL.jpg', 35.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Shampoo Head & Shoulders', '000000000028', 'Shampoo anticaspa H&S', 120, 7, 'https://static.beautytocare.com/cdn-cgi/image/width=1600,height=1600,f=auto/media/catalog/product//h/-/h-s-classic-clean-shampoo-600ml.jpg', 60.00);
+
+-- Productos de Unilever
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Helado Magnum', '000000000029', 'Helado Magnum paleta', 80, 8, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750630641577L.jpg', 40.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Shampoo Dove', '000000000030', 'Shampoo hidratante Dove', 100, 8, 'https://m.media-amazon.com/images/I/51cUe1AmSwL.jpg', 80.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Desodorante Axe', '000000000031', 'Desodorante en aerosol Axe', 150, 8, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750630622672L1.jpg?odnHeight=612&odnWidth=612&odnBg=FFFFFF', 40.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Mayonesa Hellmanns', '000000000032', 'Mayonesa Hellmanns', 90, 8, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750630631757L.jpg', 50.00);
+
+-- Productos de Peñafiel
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Agua mineral Peñafiel', '000000000033', 'Agua mineral embotellada', 100, 9, 'https://cdn.shopify.com/s/files/1/0566/4391/1854/products/7501055379811.png?v=1668297029', 10.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Refresco Peñafiel limón', '000000000034', 'Refresco sabor limón Peñafiel', 80, 9, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750107383989L.jpg', 14.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Refresco Peñafiel naranja', '000000000035', 'Refresco sabor naranja Peñafiel', 70, 9, 'https://oneiconn.vtexassets.com/arquivos/ids/189795/100111406_1.jpg?v=638430892806770000', 14.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Agua saborizada Peñafiel', '000000000036', 'Agua con sabor Peñafiel', 90, 9 , 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750107383988L.jpg', 12.00);
+
+-- Productos de Herdez 
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Salsa verde Herdez', '000000000037', 'Salsa verde Herdez', 110, 10, 'https://i5.walmartimages.com.mx/gr/images/product-images/img_large/00750100312738L.jpg', 30.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Salsa roja Herdez', '000000000038', 'Salsa roja Herdez', 120, 10, 'https://www.barriocampo.com/cdn/shop/products/herdezcasera_700x.jpg?v=1593277466', 32.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Guacamole Herdez', '000000000039', 'Guacamole envasado Herdez', 60, 10, 'https://res.cloudinary.com/oita/image/upload/w_656,h_656,c_limit,q_auto,f_auto/v1688064185/Merco/Parte%206/7501003105448_SALSA_HERDEZ_GUACAMOLE_445_GR_3_Mediana_ncyzco.jpg', 45.00);
+INSERT INTO productos (nombre, codigo, descripcion, cantidad, idMarca, imagen, precio) VALUES ('Frijoles Herdez', '000000000040', 'Frijoles en lata Herdez', 90, 10, 'https://www.cocinamexicana.es/wp-content/uploads/frijoles_negros_enteros_410g-1.jpg', 25.00);
+
+
+-- EMPLEADOS
+insert into empleados (nombre, apellido, usuario, pass, salario, foto) 
+Values ("Alexander" , "Lopez Mora" , "root" , SHA2('root', 256) , 3260 , "https://www.ngenespanol.com/wp-content/uploads/2024/08/cual-es-la-diferencia-entre-un-dinosaurio-y-un-reptil-prehistorico-770x431.jpg");
+
+
+start transaction ;
+create table ventaActual (
+idProducto int primary key auto_increment,
+nombre varchar(30) not null,
+codigo char(12) not null,
+cantidadV int not null,
+precio decimal(3) null,
+descripcion varchar(200) not null,
+cantidad int not null,
+idMarca int not null,
+imagen varchar(1000),
+foreign key (idMarca) references marca(idMarca)
+);
+INSERT INTO ventaActual (nombre, codigo, cantidadV, precio, descripcion, cantidad, idMarca, imagen)
+VALUES 
+('Coca-Cola 600ml', '000000000001', 100, 15.00, 'Refresco Coca-Cola 600ml', 50, 1, 'https://example.com/coca-cola.jpg');
+drop table ventaActual;
+commit;
